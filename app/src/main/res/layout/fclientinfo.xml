@@ -36,17 +36,16 @@
                 android:id="@+id/cancelButton"
                 android:onClick="cancelViewClient"
                 android:layout_alignParentBottom="true"
-
                 android:layout_weight="1"/>
-
         </LinearLayout>
+
+
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/linearLayout"
-            >
+            android:layout_below="@+id/linearLayout">
 
             <TextView
                 android:layout_width="fill_parent"
@@ -54,7 +53,6 @@
                 android:text="@string/nameView2"
                 android:id="@+id/textView2"
                 android:layout_centerVertical="true"
-
                 android:layout_weight="1" />
 
             <EditText
@@ -76,7 +74,6 @@
                 android:text="@string/phone"
                 android:id="@+id/textView3"
                 android:layout_centerVertical="true"
-
                 android:layout_weight="1" />
 
             <EditText

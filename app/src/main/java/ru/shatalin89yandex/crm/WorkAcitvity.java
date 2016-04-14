@@ -18,7 +18,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -37,10 +39,11 @@ public class WorkAcitvity extends AppCompatActivity
     private FragmentTransaction transaction;
     FClientList fclient;
     FClientInfo fckinfo;
-    DataBaseWork dbw = new DataBaseWork();
+    public DataBaseWork dbw = new DataBaseWork();
     ListView ClientVIew;
-    public ResultSet loc;
-
+    public ResultSet localquery;
+    public Long idquery;
+    public String[] querydata=new String[20];
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,6 +81,7 @@ public class WorkAcitvity extends AppCompatActivity
         manager = getSupportFragmentManager();
         transaction = manager.beginTransaction();
         FClientListview();
+
 
     }
 
@@ -154,25 +158,27 @@ public class WorkAcitvity extends AppCompatActivity
         dbw.idlist = new Long[20];
         String table = "club.client";
         dbw.getData(table);
-        ResultSet loc = dbw.resquery;
+      final ResultSet[] loc = {dbw.resquery};
         ArrayList<String> infoclient = new ArrayList<String>();
         ArrayList<String> idcl = new ArrayList<String>();
-        while (loc.next()){
-            Long i= loc.getLong(1);
+        while (loc[0].next()){
+            Long i= loc[0].getLong(1);
             dbw.idlist[j]=i;
-            String s = loc.getString(2);
-            String t = loc.getString(3);
+            String s = loc[0].getString(2);
+            String t = loc[0].getString(3);
             infoclient.add(s+" ("+t+")");
             idcl.add(i.toString());
             System.out.println(s+"___"+t);
             j++;
         }
-        loc.close();
+        loc[0].close();
         dbw.resquery.close();
         final ArrayAdapter<String> adapter;
         adapter=new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, infoclient);
         dbw.dbadapter=adapter;
-        ClientVIew  = (ListView)findViewById(R.id.clientview);
+      ClientVIew  = (ListView)findViewById(R.id.clientview);
+
+
 
       //список
         ClientVIew.setAdapter(adapter);
@@ -181,26 +187,36 @@ public class WorkAcitvity extends AppCompatActivity
         ClientVIew.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String tablename ="client";
-                Long idclient = dbw.idlist[position];
+
 
                 try {
-                    dbw.getDataID(idclient, tablename);
+                    dbw.getDataID(dbw.idlist[position], "client");
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
-
-
+                ResultSet local = dbw.resquery;
+                try {
+                    while (local.next()){
+                        Long idc =local.getLong(1);
+                        querydata[0]=""+idc;
+                        querydata[1] = local.getString(2);
+                        querydata[2] = local.getString(3);
+                     //
+                     ///   String name = local.getString(2);
+                      //  String phone = local.getString(3);
+                     //   System.out.println(idc+name+phone);
+                       System.out.println(querydata[0]+querydata[1]+querydata[2]);
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
                 transaction = manager.beginTransaction();
                 transaction.replace(R.id.container, fckinfo, FClientInfo.TAG);
-                System.out.println("Нажала на номер="+position);
+                System.out.println("Нажала на номер=" + position);
                 transaction.commit();
+
 
             }
         });
   }
-
-
-
-
 }
