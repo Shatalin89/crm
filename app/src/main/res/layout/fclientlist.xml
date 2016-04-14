@@ -1,0 +1,16 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:id="@+id/fragclview"
+    android:layout_height="match_parent"
+    android:clickable="true"
+    tools:context="ru.shatalin89yandex.crm.fragment.FClientList">
+
+    <ListView android:id="@+id/clientview"
+        android:layout_width="match_parent"
+        android:layout_height="522dp"
+        android:clickable="true"
+
+        />
+
+</FrameLayout>
