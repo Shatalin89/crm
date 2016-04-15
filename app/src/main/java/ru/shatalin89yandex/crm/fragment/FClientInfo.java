@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -27,17 +28,5 @@ public class FClientInfo extends Fragment {
     }
 
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        TextView idcl = (TextView) getActivity().findViewById(R.id.idClient);
-        EditText nameView = (EditText) getActivity().findViewById(R.id.nameView);
-        EditText phoneView = (EditText) getActivity().findViewById(R.id.PhoneView);
 
-        WorkAcitvity wa = new WorkAcitvity();
-        idcl.setText(wa.querydata[0]);
-        nameView.setText(wa.querydata[1]);
-        phoneView.setText(wa.querydata[2]);
-
-    }
 }

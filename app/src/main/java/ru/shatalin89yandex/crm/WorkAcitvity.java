@@ -44,6 +44,8 @@ public class WorkAcitvity extends AppCompatActivity
     public ResultSet localquery;
     public Long idquery;
     public String[] querydata=new String[20];
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,7 +61,6 @@ public class WorkAcitvity extends AppCompatActivity
                         .setAction("Action", null).show();
             }
         });
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -75,14 +76,6 @@ public class WorkAcitvity extends AppCompatActivity
         String user = intent.getStringExtra("user");
         String pass = intent.getStringExtra("pass");
         dbw.ConnectDB(url, user, pass);
-
-        fclient = new FClientList();
-        fckinfo = new FClientInfo();
-        manager = getSupportFragmentManager();
-        transaction = manager.beginTransaction();
-        FClientListview();
-
-
     }
 
 
@@ -129,6 +122,7 @@ public class WorkAcitvity extends AppCompatActivity
 
         if (id == R.id.nav_camera) {
             // Handle the camera action
+            FClientListview();
         } else if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_slideshow) {
@@ -148,13 +142,23 @@ public class WorkAcitvity extends AppCompatActivity
 
 
     void FClientListview(){
-        transaction.add(R.id.container, fclient, FClientList.TAG);
+
+        fclient = new FClientList();
+        fckinfo = new FClientInfo();
+        manager = getSupportFragmentManager();
+        transaction = manager.beginTransaction();
+        transaction.replace(R.id.container, fclient, FClientList.TAG);
         transaction.commit();
+        try {
+            getClientList();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
     }
 
   public  void getClientList() throws SQLException {
-        int j=0;
+      /*  int j=0;
         dbw.idlist = new Long[20];
         String table = "club.client";
         dbw.getData(table);
@@ -175,20 +179,11 @@ public class WorkAcitvity extends AppCompatActivity
         dbw.resquery.close();
         final ArrayAdapter<String> adapter;
         adapter=new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, infoclient);
-        dbw.dbadapter=adapter;
+      dbw.dbadapter=adapter;
       ClientVIew  = (ListView)findViewById(R.id.clientview);
-
-
-
-      //список
-        ClientVIew.setAdapter(adapter);
-
-
         ClientVIew.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-
                 try {
                     dbw.getDataID(dbw.idlist[position], "client");
                 } catch (SQLException e) {
@@ -201,22 +196,46 @@ public class WorkAcitvity extends AppCompatActivity
                         querydata[0]=""+idc;
                         querydata[1] = local.getString(2);
                         querydata[2] = local.getString(3);
-                     //
-                     ///   String name = local.getString(2);
-                      //  String phone = local.getString(3);
-                     //   System.out.println(idc+name+phone);
-                       System.out.println(querydata[0]+querydata[1]+querydata[2]);
+
                     }
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
                 transaction = manager.beginTransaction();
                 transaction.replace(R.id.container, fckinfo, FClientInfo.TAG);
-                System.out.println("Нажала на номер=" + position);
                 transaction.commit();
 
-
+                System.out.println(querydata[0] + querydata[1] + querydata[2]);
+                TextView idcl = (TextView)findViewById(R.id.idClient);
+                EditText nameView = (EditText) findViewById(R.id.nameView);
+                EditText phoneView = (EditText) findViewById(R.id.PhoneView);
+                try {
+                    Thread.sleep(4000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+               // idcl.setText(querydata[0]);
+               // nameView.setText(querydata[1]);
+               // phoneView.setText(querydata[2]);
             }
-        });
+        });*/
+
+      int j=4;
+      ArrayList<String> info=new ArrayList<>();
+
+      while(j>0){
+          j--;
+          info.add("Строка="+j);
+      }
+      ArrayAdapter<String> adapter;
+
+      adapter=new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, info);
+
+      ClientVIew = (ListView)findViewById(R.id.clientview);
+      ClientVIew.setAdapter(adapter);
+
   }
+
+
+
 }

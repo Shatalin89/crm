@@ -39,6 +39,8 @@ public class DataBaseWork {
         resquery =stmt.executeQuery(query);
     }
 
+
+
     public void editData (String table, String id, String column, String column2, String data, String data2) throws SQLException {
         String query="UPDATE club."+table+" SET "+column+"='"+data+"', "+column2+"='"+data2+"' WHERE id="+id;
         Statement stmt=conn.createStatement();

@@ -1,6 +1,7 @@
 package ru.shatalin89yandex.crm.fragment;
 
 
+import android.support.v4.app.ListFragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -14,7 +15,9 @@ import ru.shatalin89yandex.crm.R;
 import ru.shatalin89yandex.crm.WorkAcitvity;
 
 
-public class FClientList extends Fragment {
+public class FClientList extends Fragment
+
+{
 
     public static final String TAG = "FClListTag";
 
@@ -25,17 +28,17 @@ public class FClientList extends Fragment {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        WorkAcitvity wa=(WorkAcitvity)getActivity();
+    public void onStart() {
+        super.onStart();
+        WorkAcitvity wa = (WorkAcitvity) getActivity();
 
         try {
-            wa.getClientList();
+           wa.getClientList();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
+
 }
-
-
 
